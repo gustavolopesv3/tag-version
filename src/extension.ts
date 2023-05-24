@@ -1,26 +1,76 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import simpleGit, { SimpleGit, TagResult } from 'simple-git';
+import * as fs from 'fs';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+  let disposable = vscode.commands.registerCommand('tag-version.lastTag', async () => disposableUpdateTagVersion());
+  let disposable2 = vscode.commands.registerCommand('tag-version.getAuthorLastTag', async () => disposableGetAuthorLastTag());
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "tag-version" is now active!');
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('tag-version.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from tag-version!');
-	});
-
-	context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable);
+  context.subscriptions.push(disposable2);
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+function incrementVersion(tag: string): string {
+  const partes = tag.split('-');
+  if (partes.length !== 2) {
+    return tag; // Tag em formato inválido, retorna a tag original
+  }
+
+  const prefixo = partes[0];
+  const versaoAtual = partes[1];
+  const partesVersao = versaoAtual.split('.');
+  if (partesVersao.length !== 3) {
+    return tag; // Versão em formato inválido, retorna a tag original
+  }
+
+  const major = parseInt(partesVersao[0], 10);
+  const minor = parseInt(partesVersao[1], 10);
+  const patch = parseInt(partesVersao[2], 10) + 1;
+
+  const novaVersao = `${major}.${minor}.${patch}`;
+  return `${prefixo}-${novaVersao}`;
+}
+
+
+function updateVersionPackageJson(packageJsonPath: string, novaTag: string) {
+	try {
+	  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+	  packageJson.version = novaTag;
+	  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+	  vscode.window.showInformationMessage(`Tag atualizada no arquivo package.json: ${novaTag}`);
+	} catch (error) {
+	  vscode.window.showErrorMessage(`Erro ao atualizar a tag no arquivo package.json: ${error}`);
+	}
+  }
+
+  async function disposableUpdateTagVersion() {
+    const git: SimpleGit = simpleGit(vscode.workspace.rootPath);
+    try {
+      const tags = await git.tags();
+      const latestTag = tags.latest;
+	  if(!latestTag){
+		  vscode.window.showErrorMessage('Nenhuma tag encontrada');
+		  return;
+	  }
+      const incrementedTag = incrementVersion(latestTag);
+	  await git.addTag(incrementedTag);
+	  const packageJsonPath = `${vscode.workspace.rootPath}/package.json`;
+	  updateVersionPackageJson(packageJsonPath, incrementedTag);
+      vscode.window.showInformationMessage(`Tag atual: ${latestTag}\nNova tag: ${incrementedTag}`);
+    } catch (error) {
+      vscode.window.showErrorMessage(`Erro ao obter a última tag: ${error}`);
+    }
+  }
+
+  async function disposableGetAuthorLastTag(){
+	const git: SimpleGit = simpleGit(vscode.workspace.rootPath);
+	const tags = await git.tags();
+	const latestTag = tags.latest;
+	if(latestTag){
+		const tagInfo = await git.show(['--format=%an', latestTag]);
+		const lines = tagInfo.split('\n');
+		const author = lines[0];
+		vscode.window.showInformationMessage(`Autor da última tag: ${author}`);
+	}
+}
+  
