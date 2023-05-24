@@ -1,71 +1,36 @@
-# tag-version README
+# Sua Extensão
 
-This is the README for your extension "tag-version". After writing up a brief description, we recommend including the following sections.
+Essa é uma extensão para o Visual Studio Code que permite incrementar a última tag do Git, registrar a nova tag, atualizar a tag no arquivo `package.json` e obter o autor da última tag.
 
-## Features
+## Funcionalidades
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Obtém a última tag do Git
+- Incrementa o número de versão da tag
+- Registra a nova tag no Git
+- Atualiza a nova tag no arquivo `package.json`
+- Obtém o autor da última tag
 
-For example if there is an image subfolder under your extension project workspace:
+## Como usar
 
-\!\[feature X\]\(images/feature-x.png\)
+1. Certifique-se de ter o Git instalado e configurado em seu sistema.
+2. Abra o Visual Studio Code.
+3. Vá para a seção de extensões (clique no ícone de extensões na barra lateral esquerda ou use o atalho `Ctrl+Shift+X`).
+4. Pesquise por "Sua Extensão" e clique em "Instalar".
+5. Abra um projeto com um repositório Git.
+6. Abra o terminal do Visual Studio Code (use o atalho `Ctrl+`).
+7. Execute o comando "Incrementar Tag" no terminal ou pressione `Ctrl+Shift+P`, digite "Incrementar Tag" e pressione Enter.
+8. Será exibida uma mensagem com a tag atual e a nova tag incrementada.
+9. A nova tag será registrada no Git e atualizada no arquivo `package.json`.
+10. O autor da última tag será exibido como uma mensagem informativa.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Contribuindo
 
-## Requirements
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests com melhorias, correções de bugs ou novas funcionalidades.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Licença
 
-## Extension Settings
+Este projeto está licenciado sob a [Licença MIT](https://opensource.org/licenses/MIT).
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## Contato
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Se você tiver alguma dúvida, sugestão ou feedback, entre em contato através do email [gustavo.lopesv3@gmail.com](mailto:gustavo.lopesv3@gmail.com).
