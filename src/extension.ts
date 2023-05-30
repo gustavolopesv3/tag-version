@@ -26,16 +26,20 @@ export function activate(context: vscode.ExtensionContext) {
 
 }
 
-function disposableUpdateTagVersionPackageJson(){
+async function disposableUpdateTagVersionPackageJson(){
   const packageJsonPath = `${vscode.workspace.rootPath}/package.json`;
-  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-  const version = packageJson.version;
+  // const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  const version = await getLastTagByRemote();
+  if(!version){
+    vscode.window.showErrorMessage(`Não foi possível obter a última tag do repositório remoto!`);
+    return;
+  }
   const incrementedTag = _incrementVersion(version);
   updateVersionPackageJson(packageJsonPath, incrementedTag);
 }
 
 function _incrementVersion(tag: string): string {
-  const partes = tag.split('.');
+  const partes = tag.split('-')[1].split('.');
 
   const major = parseInt(partes[0], 10);
   const minor = parseInt(partes[1], 10);
@@ -43,6 +47,14 @@ function _incrementVersion(tag: string): string {
 
   const novaVersao = `${major}.${minor}.${patch}`;
   return `${novaVersao}`;
+}
+
+async function getLastTagByRemote(){
+  const git: SimpleGit = simpleGit(vscode.workspace.rootPath);
+  await git.fetch();
+  const tags = await git.tags();
+  const latestTag = tags.latest;
+  return latestTag;
 }
 
 

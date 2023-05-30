@@ -2,8 +2,9 @@
   "name": "tag-version",
   "displayName": "tag-version",
   "description": "Create tags for your git repository based on your package.json version",
-  "icon": "img/icon.png",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "icon": "./img/logo.png",
+  "publisher": "GustavoLopes",
   "engines": {
     "vscode": "^1.78.0"
   },
@@ -16,15 +17,15 @@
     "commands": [
       {
         "command": "tag-version.lastTag",
-        "title": "update tag version"
+        "title": "Tag version: update tag version"
       },
       {
         "command": "tag-version.getAuthorLastTag",
-        "title": "get author last tag"
+        "title": "Tag version: get author last tag"
       },
       {
         "command": "tag-version.update-package-json",
-        "title": "update package.json"
+        "title": "Tag version: update package.json"
       }
     ]
   },
