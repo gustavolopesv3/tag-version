@@ -20,6 +20,10 @@
       {
         "command": "tag-version.getAuthorLastTag",
         "title": "get author last tag"
+      },
+      {
+        "command": "tag-version.update-package-json",
+        "title": "update package.json"
       }
     ]
   },
