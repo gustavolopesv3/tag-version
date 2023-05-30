@@ -26,6 +26,10 @@
       {
         "command": "tag-version.update-package-json",
         "title": "Tag version: update package.json"
+      }, 
+      {
+        "commmand": "tag-version.deploy-master",
+        "title": "Tag version: deploy master"
       }
     ]
   },

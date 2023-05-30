@@ -16,6 +16,10 @@ export function activate(context: vscode.ExtensionContext) {
     {
       name: 'tag-version.update-package-json',
       command: disposableUpdateTagVersionPackageJson
+    },
+    {
+      name: 'tag-version.deploy-master',
+      command: disposableDeployMaster
     }
   ];
 
@@ -24,6 +28,21 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(command);
   });
 
+}
+
+async function disposableDeployMaster() {
+  const packageJsonPath = `${vscode.workspace.rootPath}/package.json`;
+  const tagVersion = await getLastTagByRemote();
+  if(!tagVersion){
+    vscode.window.showErrorMessage(`Não foi possível obter a última tag do repositório remoto!`);
+    return;
+  }
+
+  const incrementedTag = _incrementVersion(tagVersion);
+  await updateVersionPackageJson(packageJsonPath, incrementedTag);
+  disposableUpdateTagVersion();
+  const git: SimpleGit = simpleGit(vscode.workspace.rootPath);
+  await git.push('origin', `version-${incrementedTag}`);
 }
 
 async function disposableUpdateTagVersionPackageJson(){
@@ -63,7 +82,7 @@ async function getLastTagByRemote(){
 }
 
 
-  function updateVersionPackageJson(packageJsonPath: string, novaTag: string) {
+  async function updateVersionPackageJson(packageJsonPath: string, novaTag: string) {
 	try {
     const git: SimpleGit = simpleGit(vscode.workspace.rootPath);
 
@@ -72,8 +91,8 @@ async function getLastTagByRemote(){
 	  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 	  vscode.window.showInformationMessage(`Tag atualizada no arquivo package.json: ${novaTag}`);
 
-    git.add(packageJsonPath);
-    git.commit(`Auto commit package.json to version ${novaTag}`);
+    await git.add(packageJsonPath);
+    await git.commit(`Auto commit package.json to version ${novaTag}`);
 
     vscode.window.showInformationMessage(`Commit realizado com sucesso no arquivo package.json!`);
 
@@ -94,7 +113,7 @@ async function getLastTagByRemote(){
     const git: SimpleGit = simpleGit(vscode.workspace.rootPath);
     try {
 
-    const lastTagByPackageJson =  _getTagVersionByPackageJson();
+    const lastTagByPackageJson = _getTagVersionByPackageJson();
 
     await git.addTag(lastTagByPackageJson);
 
