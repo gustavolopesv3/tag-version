@@ -2,6 +2,7 @@
   "name": "tag-version",
   "displayName": "tag-version",
   "description": "Create tags for your git repository based on your package.json version",
+  "icon": "img/icon.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.78.0"
