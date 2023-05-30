@@ -2,7 +2,7 @@
   "name": "tag-version",
   "displayName": "tag-version",
   "description": "Create tags for your git repository based on your package.json version",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "icon": "./img/logo.png",
   "publisher": "GustavoLopes",
   "engines": {
