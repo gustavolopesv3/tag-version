@@ -50,11 +50,16 @@ function _incrementVersion(tag: string): string {
 }
 
 async function getLastTagByRemote(){
-  const git: SimpleGit = simpleGit(vscode.workspace.rootPath);
+  try {
+    const git: SimpleGit = simpleGit(vscode.workspace.rootPath);
   await git.fetch();
   const tags = await git.tags();
-  const latestTag = tags.latest;
+  const latestTag = await git.raw(['describe', '--tags', '--abbrev=0']);
   return latestTag;
+  } catch (error) {
+    vscode.window.showErrorMessage(`Erro ao obter a última tag: ${error}`);
+    return;
+  }
 }
 
 
