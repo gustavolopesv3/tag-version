@@ -1,36 +1,44 @@
-# Sua Extensão
+# Extensão Tag Version
 
-Essa é uma extensão para o Visual Studio Code que permite incrementar a última tag do Git, registrar a nova tag, atualizar a tag no arquivo `package.json` e obter o autor da última tag.
+Esta é uma extensão para o Visual Studio Code que oferece algumas funcionalidades relacionadas à manipulação de tags de versão em um repositório Git e no arquivo `package.json`. Com esta extensão, você pode atualizar a versão do `package.json` com a última tag do repositório, atualizar a tag do repositório com a tag definida no `package.json` e realizar o deploy da versão no ramo principal do repositório.
 
 ## Funcionalidades
 
-- Obtém a última tag do Git
-- Incrementa o número de versão da tag
-- Registra a nova tag no Git
-- Atualiza a nova tag no arquivo `package.json`
-- Obtém o autor da última tag
+### Tag Version: Update package.json
+
+Esta função atualiza a versão do arquivo `package.json` com a última tag disponível no repositório Git. Ela obtém a última tag criada, incrementa o número de patch e atualiza a versão no arquivo `package.json`.
+
+### Tag Version: Update tag version
+
+Com esta função, você pode atualizar a tag do repositório Git com a tag definida no arquivo `package.json`. Ela utiliza a tag presente no `package.json` e atualiza a tag do repositório correspondente.
+
+### Tag Version: Deploy master
+
+Esta função é responsável por realizar o deploy da versão no ramo principal (master) do repositório. Ela segue os seguintes passos:
+
+1. Obtém a última tag criada no repositório Git.
+2. Incrementa o número de patch na tag obtida.
+3. Atualiza a versão no arquivo `package.json` com a nova tag incrementada.
+4. Cria uma nova tag no repositório com a nova versão.
+5. Realiza o push da nova tag criada.
 
 ## Como usar
 
-1. Certifique-se de ter o Git instalado e configurado em seu sistema.
-2. Abra o Visual Studio Code.
-3. Vá para a seção de extensões (clique no ícone de extensões na barra lateral esquerda ou use o atalho `Ctrl+Shift+X`).
-4. Pesquise por "Sua Extensão" e clique em "Instalar".
-5. Abra um projeto com um repositório Git.
-6. Abra o terminal do Visual Studio Code (use o atalho `Ctrl+`).
-7. Execute o comando "Incrementar Tag" no terminal ou pressione `Ctrl+Shift+P`, digite "Incrementar Tag" e pressione Enter.
-8. Será exibida uma mensagem com a tag atual e a nova tag incrementada.
-9. A nova tag será registrada no Git e atualizada no arquivo `package.json`.
-10. O autor da última tag será exibido como uma mensagem informativa.
+1. Abra o Visual Studio Code.
+2. Navegue até o menu de extensões e pesquise por "Tag Version".
+3. Instale a extensão com o nome "Tag Version" e aguarde a instalação ser concluída.
+4. Após a instalação, você verá as três funcionalidades disponíveis no menu de comandos do Visual Studio Code.
+5. Selecione a funcionalidade desejada e aguarde a execução da ação correspondente.
 
-## Contribuindo
+Certifique-se de que o seu repositório esteja inicializado como um repositório Git antes de utilizar as funcionalidades desta extensão.
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests com melhorias, correções de bugs ou novas funcionalidades.
+## Observações
 
-## Licença
+- Esta extensão utiliza a biblioteca `simple-git` para interagir com o Git e manipular as tags e o arquivo `package.json`. Certifique-se de que a dependência esteja instalada corretamente.
+- Antes de executar a funcionalidade "Tag Version: Deploy master", verifique se você tem as permissões adequadas para realizar o push das tags no repositório remoto.
 
-Este projeto está licenciado sob a [Licença MIT](https://opensource.org/licenses/MIT).
+## Contribuição
 
-## Contato
+Se você encontrar algum problema, tiver alguma sugestão ou quiser contribuir para esta extensão, sinta-se à vontade para abrir um problema ou enviar uma solicitação de pull no repositório oficial da extensão: [[link para o repositório no GitHub]](https://github.com/gustavolopesv3/tag-version).
 
-Se você tiver alguma dúvida, sugestão ou feedback, entre em contato através do email [gustavo.lopesv3@gmail.com](mailto:gustavo.lopesv3@gmail.com).
+Esperamos que esta extensão seja útil para você!
