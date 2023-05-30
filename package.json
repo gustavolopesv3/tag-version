@@ -1,7 +1,7 @@
 {
   "name": "tag-version",
   "displayName": "tag-version",
-  "description": "",
+  "description": "Create tags for your git repository based on your package.json version",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.78.0"
