@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import simpleGit, { SimpleGit, TagResult } from 'simple-git';
+import simpleGit, { SimpleGit } from 'simple-git';
 import * as fs from 'fs';
 
 export function activate(context: vscode.ExtensionContext) {
